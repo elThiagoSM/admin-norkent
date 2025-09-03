@@ -41,6 +41,11 @@
           </div>
         </div>
 
+        <!-- Mensaje de error -->
+        <div v-if="errorMessage" class="bg-red-50 border border-red-200 rounded-lg p-3">
+          <p class="text-sm text-red-600">{{ errorMessage }}</p>
+        </div>
+
         <div>
           <button
             type="submit"
@@ -56,12 +61,26 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const username = ref('')
 const password = ref('')
+const errorMessage = ref('')
 
 const handleLogin = () => {
-  console.log('Login attempt:', { username: username.value, password: password.value })
-  // Aquí puedes agregar la lógica de autenticación
+  // Validar credenciales
+  if (username.value === 'admin' && password.value === '1234') {
+    // Credenciales correctas
+    localStorage.setItem('isAuthenticated', 'true')
+    errorMessage.value = ''
+    // Redirigir al inicio
+    router.push('/')
+  } else {
+    // Credenciales incorrectas
+    errorMessage.value = 'Usuario o contraseña incorrectos'
+    username.value = ''
+    password.value = ''
+  }
 }
 </script>

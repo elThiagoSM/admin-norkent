@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Login from './components/Login.vue'
+// App.vue ahora usa el router
 </script>
 
 <template>
-  <Login />
+  <router-view />
 </template>
